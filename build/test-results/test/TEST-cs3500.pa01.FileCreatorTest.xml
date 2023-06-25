@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs3500.pa01.FileCreatorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-05-27T00:29:24" hostname="Krishs-MacBook-8.local" time="0.016">
+  <properties/>
+  <testcase name="studyGuideMaker()" classname="cs3500.pa01.FileCreatorTest" time="0.004"/>
+  <testcase name="questionBankMaker()" classname="cs3500.pa01.FileCreatorTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

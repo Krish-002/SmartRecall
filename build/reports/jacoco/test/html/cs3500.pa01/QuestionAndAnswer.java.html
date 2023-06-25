@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuestionAndAnswer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01</a> &gt; <span class="el_source">QuestionAndAnswer.java</span></div><h1>QuestionAndAnswer.java</h1><pre class="source lang-java linenums">package cs3500.pa01;
+
+// ... relevant imports ...
+
+import java.time.LocalDateTime;
+
+/**
+ * QuestionAndAnswer class for the question and answer
+ */
+public class QuestionAndAnswer {
+
+  private int questionNumber; // question number
+  private String question; // question
+  private String answer; // answer
+  private Difficulty difficulty; // difficulty of the question
+  private LocalDateTime lastAccessed; // last accessed DATE of the question
+
+  /**
+   * Constructor for the question and answer
+   *
+   * @param question question
+   * @param answer   answer
+   */
+<span class="nc" id="L24">  public QuestionAndAnswer(String question, String answer) {</span>
+<span class="nc" id="L25">    this.questionNumber = 0;</span>
+<span class="nc" id="L26">    this.question = question;</span>
+<span class="nc" id="L27">    this.answer = answer;</span>
+<span class="nc" id="L28">    this.difficulty = Difficulty.HARD;</span>
+<span class="nc" id="L29">    this.lastAccessed = LocalDateTime.now();</span>
+<span class="nc" id="L30">  }</span>
+
+  /**
+   * Constructor for the question and answer
+   *
+   * @param questionNumber question number
+   * @param question       question
+   * @param answer         answer
+   * @param dif            difficulty of the question
+   */
+<span class="nc" id="L40">  public QuestionAndAnswer(int questionNumber, String question, String answer, Difficulty dif) {</span>
+<span class="nc" id="L41">    this.questionNumber = questionNumber;</span>
+<span class="nc" id="L42">    this.question = question;</span>
+<span class="nc" id="L43">    this.answer = answer;</span>
+<span class="nc" id="L44">    this.difficulty = dif;</span>
+<span class="nc" id="L45">    this.lastAccessed = LocalDateTime.now();</span>
+<span class="nc" id="L46">  }</span>
+
+  /**
+   * Constructor for the question and answer
+   *
+   * @param questionNumber question number
+   * @param question       question
+   * @param answer         answer
+   * @param dif            difficulty of the question
+   * @param lastAccessed   last accessed date of the question
+   */
+  public QuestionAndAnswer(int questionNumber, String question, String answer, Difficulty dif,
+<span class="fc" id="L58">                           LocalDateTime lastAccessed) {</span>
+<span class="fc" id="L59">    this.questionNumber = questionNumber;</span>
+<span class="fc" id="L60">    this.question = question;</span>
+<span class="fc" id="L61">    this.answer = answer;</span>
+<span class="fc" id="L62">    this.difficulty = dif;</span>
+<span class="fc" id="L63">    this.lastAccessed = lastAccessed;</span>
+<span class="fc" id="L64">  }</span>
+
+  /**
+   * gets the question number
+   *
+   * @return question number
+   */
+  public int getQuestionNumber() {
+<span class="nc" id="L72">    return questionNumber;</span>
+  }
+
+  /**
+   * getter for the question
+   *
+   * @return question
+   */
+  public String getQuestion() {
+<span class="nc" id="L81">    return question;</span>
+  }
+
+  /**
+   * getter for the answer
+   *
+   * @return answer
+   */
+  public String getAnswer() {
+<span class="nc" id="L90">    return answer;</span>
+  }
+
+  /**
+   * getter for the difficulty
+   *
+   * @return difficulty
+   */
+  public Difficulty getDifficulty() {
+<span class="fc" id="L99">    return difficulty;</span>
+  }
+
+  /**
+   * getter  for the last accessed date
+   *
+   * @return last accessed date
+   */
+  public LocalDateTime getLastAccessed() {
+<span class="nc" id="L108">    return lastAccessed;</span>
+  }
+
+  /**
+   * setter for the question number
+   *
+   * @param questionNumber question number
+   */
+  public void setQuestionNumber(int questionNumber) {
+<span class="nc" id="L117">    this.questionNumber = questionNumber;</span>
+<span class="nc" id="L118">  }</span>
+
+  /**
+   * setter for the difficulty
+   *
+   * @param difficulty difficulty
+   */
+  public void setDifficulty(Difficulty difficulty) {
+<span class="nc" id="L126">    this.difficulty = difficulty;</span>
+<span class="nc" id="L127">  }</span>
+
+  /**
+   * setter for the last accessed date
+   *
+   * @param lastAccessed last accessed date
+   */
+  public void setLastAccessed(LocalDateTime lastAccessed) {
+<span class="nc" id="L135">    this.lastAccessed = lastAccessed;</span>
+<span class="nc" id="L136">  }</span>
+
+  /**
+   * convert the question and answer to string
+   *
+   * @return string of the question and answer
+   */
+  @Override
+  public String toString() {
+<span class="nc" id="L145">    return</span>
+        &quot;[[&quot; + this.questionNumber + &quot;]]&quot;
+            + &quot;[[&quot; + this.question + &quot;]]&quot;
+            + &quot;[[&quot; + this.answer + &quot;]]&quot;
+<span class="nc" id="L149">            + &quot;[[&quot; + this.difficulty.toString()</span>
+            + &quot;]]&quot;
+<span class="nc" id="L151">            + &quot;[[&quot; + this.lastAccessed.toString()</span>
+            + &quot;]]&quot;;
+  }
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

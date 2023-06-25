@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.10.0">
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/Driver.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/controller/ControlStudySession.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/controller/ControlSs.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/model/ModelSs.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/model/Difficulty.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/model/QuestionAndAnswer.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/model/ModelStudySession.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/view/ViewStudySession.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/studyguide/ComparePath.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/studyguide/FileCreator.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/studyguide/FileWalker.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/studyguide/Utils.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/main/java/cs3500/pa01/studyguide/InfoBlock.java">
+</file>
+</checkstyle>

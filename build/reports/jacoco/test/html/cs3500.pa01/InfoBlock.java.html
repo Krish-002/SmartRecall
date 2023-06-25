@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InfoBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01</a> &gt; <span class="el_source">InfoBlock.java</span></div><h1>InfoBlock.java</h1><pre class="source lang-java linenums">package cs3500.pa01;
+
+// ... relevant imports ...
+
+import java.util.ArrayList;
+
+/**
+ * this class represents an info block which is a header and a list of important points
+ */
+public class InfoBlock {
+
+  private String header; // the header of the info block
+  private ArrayList&lt;String&gt; impPoints; // the list of important points
+  private ArrayList&lt;QuestionAndAnswer&gt; qaList; // the list of questions and answers
+
+  /**
+   * constructor for an info block
+   *
+   * @param header    the header of the info block
+   * @param impPoints the list of important points
+   */
+<span class="nc" id="L22">  public InfoBlock(String header, ArrayList&lt;String&gt; impPoints) {</span>
+<span class="nc" id="L23">    this.header = header;</span>
+<span class="nc" id="L24">    this.impPoints = impPoints;</span>
+<span class="nc" id="L25">    this.qaList = new ArrayList&lt;QuestionAndAnswer&gt;();</span>
+<span class="nc" id="L26">    separateInfoAndQues();</span>
+<span class="nc" id="L27">  }</span>
+
+  /**
+   * gets the Q and A list
+   *
+   * @return the Q and A list
+   */
+  public ArrayList&lt;QuestionAndAnswer&gt; getQaList() {
+<span class="nc" id="L35">    return qaList;</span>
+  }
+
+  /**
+   * gets the list of all important points and mutates the fields to seperate the questions and
+   * important points.
+   */
+  private void separateInfoAndQues() {
+<span class="nc" id="L43">    String[] tempArr = this.impPoints.toArray(new String[0]);</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">    for (String s : tempArr) {</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">      if (s.contains(&quot;:::&quot;)) {</span>
+<span class="nc" id="L46">        String[] tempArr2 = s.split(&quot;:::&quot;);</span>
+<span class="nc" id="L47">        QuestionAndAnswer qa = new QuestionAndAnswer(tempArr2[0].trim(), tempArr2[1].trim());</span>
+<span class="nc" id="L48">        this.qaList.add(qa);</span>
+<span class="nc" id="L49">        this.impPoints.remove(s);</span>
+      }
+    }
+
+<span class="nc" id="L53">  }</span>
+
+  /**
+   * returns the string representation of an info block
+   */
+  @Override
+  public String toString() {
+<span class="nc" id="L60">    StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L61">    sb.append(this.header.concat(&quot;\n&quot;));</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">    for (String s : this.impPoints) {</span>
+<span class="nc" id="L63">      sb.append(&quot;- &quot;.concat(s.concat(&quot;\n&quot;)));</span>
+<span class="nc" id="L64">    }</span>
+<span class="nc" id="L65">    return sb.toString();</span>
+  }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs3500.pa01.ModelStudySessionTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2023-05-27T00:29:24" hostname="Krishs-MacBook-8.local" time="0.411">
+  <properties/>
+  <testcase name="getCountHardQues()" classname="cs3500.pa01.ModelStudySessionTest" time="0.032"/>
+  <testcase name="getListOfAllQuestions()" classname="cs3500.pa01.ModelStudySessionTest" time="0.035"/>
+  <testcase name="updateChanges()" classname="cs3500.pa01.ModelStudySessionTest" time="0.053"/>
+  <testcase name="getSessionList()" classname="cs3500.pa01.ModelStudySessionTest" time="0.042"/>
+  <testcase name="stringToQuestion()" classname="cs3500.pa01.ModelStudySessionTest" time="0.026"/>
+  <testcase name="getAllQues()" classname="cs3500.pa01.ModelStudySessionTest" time="0.049"/>
+  <testcase name="generateSessionList()" classname="cs3500.pa01.ModelStudySessionTest" time="0.034"/>
+  <testcase name="writeToFile()" classname="cs3500.pa01.ModelStudySessionTest" time="0.024"/>
+  <testcase name="setListOfAllQuestions()" classname="cs3500.pa01.ModelStudySessionTest" time="0.037"/>
+  <testcase name="getCountEasyQues()" classname="cs3500.pa01.ModelStudySessionTest" time="0.036"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

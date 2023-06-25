@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComparePath.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01.studyguide</a> &gt; <span class="el_source">ComparePath.java</span></div><h1>ComparePath.java</h1><pre class="source lang-java linenums">package cs3500.pa01.studyguide;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Comparator;
+
+/**
+ * This class compares two paths based on the ordering flag
+ */
+public class ComparePath implements Comparator&lt;Path&gt; {
+  private  String flag;
+
+  /**
+   * constructor for a compare path
+   *
+   * @param flag the flag that determines the order of the files
+   */
+<span class="fc" id="L20">  public ComparePath(String flag) {</span>
+<span class="fc" id="L21">    this.flag = flag;</span>
+<span class="fc" id="L22">  }</span>
+
+  /**
+   * compares two paths based on the ordering flag
+   *
+   * @param o1 the first path
+   * @param o2 the second path
+   * @return the result of the comparison
+   */
+
+  @Override
+  public int compare(Path o1, Path o2) {
+<span class="fc" id="L34">    BasicFileAttributes attr1 = null;</span>
+    try {
+<span class="fc" id="L36">      attr1 = Files.readAttributes(o1, BasicFileAttributes.class);</span>
+<span class="nc" id="L37">    } catch (IOException e) {</span>
+<span class="nc" id="L38">      throw new RuntimeException(e);</span>
+<span class="fc" id="L39">    }</span>
+<span class="fc" id="L40">    BasicFileAttributes attr2 = null;</span>
+    try {
+<span class="fc" id="L42">      attr2 = Files.readAttributes(o2, BasicFileAttributes.class);</span>
+<span class="nc" id="L43">    } catch (IOException e) {</span>
+<span class="nc" id="L44">      throw new RuntimeException(e);</span>
+<span class="fc" id="L45">    }</span>
+
+<span class="fc bfc" id="L47" title="All 4 branches covered.">    return switch (this.flag) {</span>
+<span class="fc" id="L48">      case &quot;filename&quot; -&gt; o1.getFileName().compareTo(o2.getFileName());</span>
+<span class="fc" id="L49">      case &quot;created&quot; -&gt; attr1.creationTime().compareTo(attr2.creationTime());</span>
+<span class="fc" id="L50">      case &quot;modified&quot; -&gt; attr1.lastModifiedTime().compareTo(attr2.lastModifiedTime());</span>
+<span class="fc" id="L51">      default -&gt; throw new IllegalArgumentException(&quot;Flag wrong&quot;);</span>
+    };
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

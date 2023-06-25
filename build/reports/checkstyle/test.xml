@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.10.0">
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/QuestionAndAnswerTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/InfoBlockTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/ViewStudySessionTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/DriverTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/ComparePathTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/FileWalkerTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/FileCreatorTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/UtilsTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/ControlStudySessionTest.java">
+</file>
+<file name="/Users/krishbansal/Desktop/Summer 1/CS 3500/pa02-Krish-002/src/test/java/cs3500/pa01/ModelStudySessionTest.java">
+</file>
+</checkstyle>

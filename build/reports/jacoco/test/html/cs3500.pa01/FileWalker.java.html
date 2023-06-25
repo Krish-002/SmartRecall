@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileWalker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01</a> &gt; <span class="el_source">FileWalker.java</span></div><h1>FileWalker.java</h1><pre class="source lang-java linenums">package cs3500.pa01;
+
+// ... relevant imports ...
+
+import static java.nio.file.FileVisitResult.CONTINUE;
+
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+
+/**
+ * FileWalker class that walks through the file tree
+ */
+
+public class FileWalker implements FileVisitor&lt;Path&gt; {
+  private ArrayList&lt;Path&gt; listOfFiles;
+  private final String orderingFlag;
+
+
+  /**
+   * constructor for a file walker
+   *
+   * @param orderingFlag the flag that determines the order of the files
+   */
+<span class="nc" id="L29">  public FileWalker(String orderingFlag) {</span>
+<span class="nc" id="L30">    this.listOfFiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L31">    this.orderingFlag = orderingFlag;</span>
+<span class="nc" id="L32">  }</span>
+
+  /**
+   * gets the list of files
+   *
+   * @return the list of files
+   * @throws IllegalStateException if the list of files has not been created yet
+   */
+  public ArrayList&lt;Path&gt; getListOfFiles() {
+
+<span class="nc" id="L42">    sortFiles();</span>
+<span class="nc" id="L43">    return this.listOfFiles;</span>
+
+  }
+
+  /**
+   * sorts the files based on the ordering flag by mutating the list of files
+   */
+  private void sortFiles() {
+<span class="nc" id="L51">    listOfFiles.sort(new ComparePath(this.orderingFlag));</span>
+<span class="nc" id="L52">  }</span>
+
+  /**
+   * visits a file and adds it to the list of files
+   *
+   * @param file the path of the file to be visited
+   * @param attr the attributes of the file using the basic file attributes class
+   * @return the file visit result
+   */
+  @Override
+  public FileVisitResult visitFile(Path file, BasicFileAttributes attr) {
+<span class="nc bnc" id="L63" title="All 2 branches missed.">    if (file.toString().endsWith(&quot;.md&quot;)) {</span>
+<span class="nc" id="L64">      this.listOfFiles.add(file);</span>
+    }
+
+<span class="nc" id="L67">    return CONTINUE;</span>
+  }
+
+  /**
+   * visits a directory and continues to look for files
+   *
+   * @param dir  the path of the directory to be visited
+   * @param exec the IOException
+   * @return the file visit result
+   */
+  @Override
+  public FileVisitResult postVisitDirectory(Path dir, IOException exec) {
+
+<span class="nc" id="L80">    return CONTINUE;</span>
+  }
+
+  /**
+   * visits a directory and continues to look for files
+   *
+   * @param dir   the path of the directory to be visited
+   * @param attrs the attributes of the file using the basic file attributes class
+   * @return the file visit result
+   */
+  @Override
+  public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+
+<span class="nc" id="L93">    return CONTINUE;</span>
+  }
+
+  /**
+   * prints an error message if the file visit fails
+   *
+   * @param file the path of the file to be visited
+   * @param exc  the IOException
+   * @return the file visit result
+   */
+
+  @Override
+  public FileVisitResult visitFileFailed(Path file, IOException exc) {
+<span class="nc" id="L106">    System.err.print(exc);</span>
+<span class="nc" id="L107">    return CONTINUE;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileCreator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01.studyguide</a> &gt; <span class="el_source">FileCreator.java</span></div><h1>FileCreator.java</h1><pre class="source lang-java linenums">package cs3500.pa01.studyguide;
+
+//relevant imports
+
+import cs3500.pa01.model.QuestionAndAnswer;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+
+/**
+ *
+ */
+public class FileCreator {
+  private ArrayList&lt;InfoBlock&gt; sortedInfo;
+  private String outputPath;
+
+  /**
+   * constructor for a file creator
+   *
+   * @param sortedInfo the sorted info blocks
+   * @param opath      the output path location for the file created
+   */
+
+<span class="fc" id="L26">  public FileCreator(ArrayList&lt;InfoBlock&gt; sortedInfo, String opath) {</span>
+<span class="fc" id="L27">    this.sortedInfo = sortedInfo;</span>
+<span class="fc" id="L28">    this.outputPath = opath;</span>
+<span class="fc" id="L29">  }</span>
+
+  /**
+   * creates a new file with the sorted info blocks called StudyGuide.md
+   * if it already exists, it overwrites it
+   */
+  public void studyGuideMaker() {
+    try {
+<span class="fc" id="L37">      File studyGuide = new File(this.outputPath);</span>
+<span class="fc" id="L38">      try (FileWriter fw = new FileWriter(studyGuide, false)) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (InfoBlock i : this.sortedInfo) {</span>
+<span class="fc" id="L40">          fw.write(i.toString().concat(&quot;\n&quot;));</span>
+<span class="fc" id="L41">        }</span>
+      }
+<span class="nc" id="L43">    } catch (IOException e) {</span>
+<span class="nc" id="L44">      System.out.println(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L45">      e.printStackTrace();</span>
+<span class="nc" id="L46">      System.exit(1);</span>
+<span class="fc" id="L47">    }</span>
+<span class="fc" id="L48">  }</span>
+
+  /**
+   * creates a new file with the sorted info blocks called QuestionBank.sr
+   * if it already exists, it overwrites it
+   */
+  public void questionBankMaker() {
+    try {
+<span class="fc" id="L56">      File questionBank = new File(changeExtension(this.outputPath));</span>
+<span class="fc" id="L57">      try (FileWriter fw = new FileWriter(questionBank, false)) {</span>
+<span class="fc" id="L58">        int quesNumAssigner = 0;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (InfoBlock i : this.sortedInfo) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">          for (QuestionAndAnswer qa : i.getQaList()) {</span>
+<span class="fc" id="L61">            qa.setQuestionNumber(quesNumAssigner);</span>
+<span class="fc" id="L62">            fw.write(qa.toString().concat(&quot;\n&quot;));</span>
+<span class="fc" id="L63">            quesNumAssigner++;</span>
+<span class="fc" id="L64">          }</span>
+<span class="fc" id="L65">        }</span>
+      }
+<span class="nc" id="L67">    } catch (IOException e) {</span>
+<span class="nc" id="L68">      System.out.println(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L69">      e.printStackTrace();</span>
+<span class="nc" id="L70">      System.exit(1);</span>
+<span class="fc" id="L71">    }</span>
+<span class="fc" id="L72">  }</span>
+
+  private static String changeExtension(String s) {
+<span class="fc" id="L75">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L76">    sb.append(s);</span>
+<span class="fc" id="L77">    int c = sb.length() - 1;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">    while (sb.charAt(c) != '.') {</span>
+<span class="fc" id="L79">      sb.deleteCharAt(c);</span>
+<span class="fc" id="L80">      c--;</span>
+    }
+<span class="fc" id="L82">    sb.append(&quot;sr&quot;);</span>
+<span class="fc" id="L83">    return sb.toString();</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

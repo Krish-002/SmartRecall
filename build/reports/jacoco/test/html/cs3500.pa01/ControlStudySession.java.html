@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControlStudySession.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01</a> &gt; <span class="el_source">ControlStudySession.java</span></div><h1>ControlStudySession.java</h1><pre class="source lang-java linenums">package cs3500.pa01;
+
+// ... relevant imports ...
+
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * Control class for the study session
+ */
+public class ControlStudySession implements ControlSS {
+  ModelStudySession model; // model for the study session
+  ViewStudySession view; // view for the study session
+  Path path; // path to the question bank
+  int numQues; // number of questions to be asked
+  int count; // keeps track of the number of questions asked
+  private ArrayList&lt;QuestionAndAnswer&gt; answeredQuestions; // keeps track of the questions asked
+
+  /**
+   *
+   */
+<span class="fc" id="L26">  public ControlStudySession() {</span>
+<span class="fc" id="L27">    this.view = new ViewStudySession(new StringBuilder());</span>
+<span class="fc" id="L28">    this.path = null;</span>
+<span class="fc" id="L29">    this.numQues = 0;</span>
+<span class="nc" id="L30">    initializeSession(); // initializes the study session</span>
+<span class="nc" id="L31">    this.model = new ModelStudySession(this.path, numQues);</span>
+<span class="nc" id="L32">    this.count = 0;</span>
+<span class="nc" id="L33">    this.answeredQuestions = new ArrayList&lt;QuestionAndAnswer&gt;();</span>
+<span class="nc" id="L34">  }</span>
+
+  public ModelStudySession getModel() {
+<span class="nc" id="L37">    return model;</span>
+  }
+
+  public ViewStudySession getView() {
+<span class="nc" id="L41">    return view;</span>
+  }
+
+  public Path getPath() {
+<span class="nc" id="L45">    return path;</span>
+  }
+
+  public int getNumQues() {
+<span class="nc" id="L49">    return numQues;</span>
+  }
+
+  public int getCount() {
+<span class="nc" id="L53">    return count;</span>
+  }
+
+  /**
+   * initializes the study session by asking the user for the path to the question bank and the
+   * number of questions they want to be asked
+   */
+  public void initializeSession() {
+    Scanner s;
+<span class="fc" id="L62">    this.view.showWelcomeScreen();</span>
+<span class="fc" id="L63">    s = new Scanner(System.in);</span>
+<span class="nc" id="L64">    Path p1 = Path.of(s.nextLine());</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">    if(Files.exists(p1)){</span>
+<span class="nc" id="L66">      this.path = p1;</span>
+<span class="nc" id="L67">      this.view.askNumOfQues();</span>
+<span class="nc" id="L68">      s = new Scanner(System.in);</span>
+      try {
+<span class="nc" id="L70">        this.numQues = Integer.parseInt(s.nextLine());</span>
+<span class="nc" id="L71">      } catch (NumberFormatException e) {</span>
+<span class="nc" id="L72">        this.view.showInvalidInput();</span>
+<span class="nc" id="L73">        initializeSession();</span>
+<span class="nc" id="L74">      }</span>
+<span class="nc" id="L75">      s.reset();</span>
+    } else{
+<span class="nc" id="L77">        this.view.showInvalidInput();</span>
+<span class="nc" id="L78">        initializeSession();</span>
+    }
+<span class="nc" id="L80">    s.reset();</span>
+<span class="nc" id="L81">  }</span>
+
+  /**
+   * runs the study session
+   * checks if the number of questions asked is equal to the number of questions the user wants to
+   * be asked
+   * if is, then it gets the summary of the study session
+   */
+  public void studySessionRun() {
+<span class="nc" id="L90">    int countEnd = this.model.getSessionList().size();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">    if (count == countEnd) {</span>
+<span class="nc" id="L92">      getSummaryStudySession();</span>
+<span class="nc" id="L93">      this.model.updateChanges(this.answeredQuestions);</span>
+    } else {
+<span class="nc" id="L95">      QuestionAndAnswer currQa = this.model.getSessionList().get(count);</span>
+<span class="nc" id="L96">      this.view.showQuestion(currQa);</span>
+<span class="nc" id="L97">      processUserResponse(currQa);</span>
+    }
+<span class="nc" id="L99">  }</span>
+
+  /**
+   * gets the summary of the study session
+   * calls the view to display the summary
+   */
+  public void getSummaryStudySession() {
+<span class="nc" id="L106">    int quesAnswered = this.answeredQuestions.size();</span>
+<span class="nc" id="L107">    int easyToHard = countEasyToHard();</span>
+<span class="nc" id="L108">    int hardToEasy = countHardToEasy();</span>
+<span class="nc" id="L109">    int totalHardQues = this.model.getCountHardQues() + easyToHard - hardToEasy;</span>
+<span class="nc" id="L110">    int totalEasyQues = this.model.getCountEasyQues() - easyToHard + hardToEasy;</span>
+<span class="nc" id="L111">    this.view.getSummary(quesAnswered, easyToHard, hardToEasy, totalHardQues, totalEasyQues);</span>
+<span class="nc" id="L112">  }</span>
+
+  /**
+   * counts the number of questions that were originally easy but were answered hard
+   *
+   * @return integer representing the number of questions that were easy but were hard
+   */
+  public int countEasyToHard() {
+<span class="nc" id="L120">    int count = 0;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">    for (QuestionAndAnswer qa : this.answeredQuestions) {</span>
+<span class="nc" id="L122">      QuestionAndAnswer original = this.model.getListOfAllQuestions().get(qa.getQuestionNumber());</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">      if (original.getDifficulty().equals(Difficulty.EASY)</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">          &amp;&amp; qa.getDifficulty().equals(Difficulty.HARD)) {</span>
+<span class="nc" id="L125">        count++;</span>
+      }
+<span class="nc" id="L127">    }</span>
+<span class="nc" id="L128">    return count;</span>
+  }
+
+  /**
+   * counts the number of questions that were originally hard but were answered easy
+   *
+   * @return integer representing the number of questions that were originally hard but were
+   * answered easy
+   */
+
+  public int countHardToEasy() {
+<span class="nc" id="L139">    int count = 0;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">    for (QuestionAndAnswer qa : this.answeredQuestions) {</span>
+<span class="nc" id="L141">      QuestionAndAnswer original = this.model.getListOfAllQuestions().get(qa.getQuestionNumber());</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">      if (original.getDifficulty().equals(Difficulty.HARD)</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">          &amp;&amp; qa.getDifficulty().equals(Difficulty.EASY)) {</span>
+<span class="nc" id="L144">        count++;</span>
+      }
+<span class="nc" id="L146">    }</span>
+<span class="nc" id="L147">    return count;</span>
+  }
+
+  /**
+   * processes the user's response to the question
+   *
+   * @param currQa the current question being asked.
+   */
+  public void processUserResponse(QuestionAndAnswer currQa) {
+<span class="nc" id="L156">    Scanner s = new Scanner(System.in);</span>
+<span class="nc" id="L157">    String response = s.nextLine();</span>
+<span class="nc bnc" id="L158" title="All 5 branches missed.">    switch (response) {</span>
+      case &quot;1&quot; -&gt; { // if the user answers hard
+<span class="nc" id="L160">        QuestionAndAnswer qa =</span>
+<span class="nc" id="L161">            new QuestionAndAnswer(currQa.getQuestionNumber(), currQa.getQuestion(),</span>
+<span class="nc" id="L162">                currQa.getAnswer(), Difficulty.HARD);</span>
+<span class="nc" id="L163">        this.answeredQuestions.add(qa);</span>
+<span class="nc" id="L164">        count++;</span>
+<span class="nc" id="L165">        studySessionRun();</span>
+<span class="nc" id="L166">      }</span>
+      case &quot;2&quot; -&gt; { // if the user answers easy
+<span class="nc" id="L168">        QuestionAndAnswer qa =</span>
+<span class="nc" id="L169">            new QuestionAndAnswer(currQa.getQuestionNumber(), currQa.getQuestion(),</span>
+<span class="nc" id="L170">                currQa.getAnswer(), Difficulty.EASY);</span>
+<span class="nc" id="L171">        this.answeredQuestions.add(qa);</span>
+<span class="nc" id="L172">        count++;</span>
+<span class="nc" id="L173">        studySessionRun();</span>
+<span class="nc" id="L174">      }</span>
+      case &quot;3&quot; -&gt; { // if the user wants to see the answer
+<span class="nc" id="L176">        System.out.println(currQa.getAnswer());</span>
+<span class="nc" id="L177">        processUserResponse(currQa);</span>
+<span class="nc" id="L178">      }</span>
+      case &quot;4&quot; -&gt; { // if the user wants to quit
+<span class="nc" id="L180">        getSummaryStudySession();</span>
+<span class="nc" id="L181">        this.model.updateChanges(this.answeredQuestions);</span>
+<span class="nc" id="L182">      }</span>
+      default -&gt; { // if the user enters an invalid response
+<span class="nc" id="L184">        System.out.println(&quot;Enter a valid response&quot;);</span>
+<span class="nc" id="L185">        processUserResponse(currQa);</span>
+      }
+    }
+
+<span class="nc" id="L189">  }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

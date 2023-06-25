@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Driver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01</a> &gt; <span class="el_source">Driver.java</span></div><h1>Driver.java</h1><pre class="source lang-java linenums">package cs3500.pa01;
+
+//relevant imports
+
+import cs3500.pa01.controller.ControlStudySession;
+import cs3500.pa01.studyguide.FileCreator;
+import cs3500.pa01.studyguide.FileWalker;
+import cs3500.pa01.studyguide.InfoBlock;
+import cs3500.pa01.studyguide.Utils;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Random;
+
+/**
+ * This is the main driver of this project.
+ */
+<span class="nc" id="L20">public class Driver {</span>
+
+  /**
+   * main method of the driver
+   *
+   * @param args command line arguments
+   * @throws IllegalArgumentException if the number of arguments is not 3
+   * @throws IllegalArgumentException if the flag is not valid
+   */
+  public static void main(String[] args) throws IOException {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">    if (args.length == 3) {</span>
+<span class="fc" id="L31">      String startPath = args[0];</span>
+<span class="fc" id="L32">      String orderingFlag = args[1];</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">      if (!orderingFlag.equals(&quot;created&quot;)</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">          &amp;&amp; !orderingFlag.equals(&quot;modified&quot;)</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">          &amp;&amp; !orderingFlag.equals(&quot;filename&quot;)) {</span>
+<span class="fc" id="L36">        throw new IllegalArgumentException(&quot;Invalid flag&quot;);</span>
+      }
+<span class="fc" id="L38">      String location = args[2];</span>
+<span class="fc" id="L39">      ArrayList&lt;InfoBlock&gt; iblist = new ArrayList&lt;InfoBlock&gt;();</span>
+<span class="fc" id="L40">      Utils u = new Utils();</span>
+<span class="fc" id="L41">      Path p = Path.of(startPath);</span>
+<span class="fc" id="L42">      FileWalker fw = new FileWalker(orderingFlag);</span>
+<span class="fc" id="L43">      iblist.addAll(u.filesToInfoBlocks(fw, p));</span>
+
+      //creates the new file
+<span class="fc" id="L46">      FileCreator fc = new FileCreator(iblist, location);</span>
+<span class="fc" id="L47">      fc.studyGuideMaker();</span>
+<span class="fc" id="L48">      fc.questionBankMaker(); //creates the question bank</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">    } else if (args.length == 0) {</span>
+<span class="nc" id="L50">      ControlStudySession css = null;</span>
+      try {
+<span class="nc" id="L52">        css = new ControlStudySession(new InputStreamReader(System.in), System.out, new Random());</span>
+<span class="nc" id="L53">      } catch (IOException e) {</span>
+<span class="nc" id="L54">        throw new RuntimeException(e);</span>
+<span class="nc" id="L55">      }</span>
+<span class="nc" id="L56">      css.run();  //runs the study session</span>
+<span class="nc" id="L57">    } else {</span>
+<span class="fc" id="L58">      throw new IllegalArgumentException(&quot;number of arguments are wrong&quot;);</span>
+    }
+<span class="fc" id="L60">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

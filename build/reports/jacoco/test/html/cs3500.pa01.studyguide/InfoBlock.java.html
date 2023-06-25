@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InfoBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01.studyguide</a> &gt; <span class="el_source">InfoBlock.java</span></div><h1>InfoBlock.java</h1><pre class="source lang-java linenums">package cs3500.pa01.studyguide;
+
+// ... relevant imports ...
+
+import cs3500.pa01.model.QuestionAndAnswer;
+import java.util.ArrayList;
+
+/**
+ * this class represents an info block which is a header and a list of important points
+ */
+public class InfoBlock {
+
+  private String header; // the header of the info block
+  private ArrayList&lt;String&gt; impPoints; // the list of important points
+  private ArrayList&lt;QuestionAndAnswer&gt; qaList; // the list of questions and answers
+
+  /**
+   * constructor for an info block
+   *
+   * @param header    the header of the info block
+   * @param impPoints the list of important points
+   */
+<span class="fc" id="L23">  public InfoBlock(String header, ArrayList&lt;String&gt; impPoints) {</span>
+<span class="fc" id="L24">    this.header = header;</span>
+<span class="fc" id="L25">    this.impPoints = impPoints;</span>
+<span class="fc" id="L26">    this.qaList = new ArrayList&lt;QuestionAndAnswer&gt;();</span>
+<span class="fc" id="L27">  }</span>
+
+  public void setImpPoints(ArrayList&lt;String&gt; impPoints) {
+<span class="fc" id="L30">    this.impPoints = impPoints;</span>
+<span class="fc" id="L31">    separateInfoAndQues();</span>
+<span class="fc" id="L32">  }</span>
+
+  /**
+   * gets the Q and A list
+   *
+   * @return the Q and A list
+   */
+  public ArrayList&lt;QuestionAndAnswer&gt; getQaList() {
+<span class="fc" id="L40">    return qaList;</span>
+  }
+
+  /**
+   * gets the list of all important points and mutates the fields to seperate the questions and
+   * important points.
+   */
+  private void separateInfoAndQues() {
+<span class="fc" id="L48">    String[] tempArr = this.impPoints.toArray(new String[0]);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">    for (String s : tempArr) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">      if (s.contains(&quot;:::&quot;)) {</span>
+<span class="fc" id="L51">        String[] tempArr2 = s.split(&quot;:::&quot;);</span>
+<span class="fc" id="L52">        QuestionAndAnswer qa = new QuestionAndAnswer(tempArr2[0].trim(), tempArr2[1].trim());</span>
+<span class="fc" id="L53">        this.qaList.add(qa);</span>
+<span class="fc" id="L54">        this.impPoints.remove(s);</span>
+      }
+    }
+
+<span class="fc" id="L58">  }</span>
+
+  /**
+   * returns the string representation of an info block
+   */
+  @Override
+  public String toString() {
+<span class="fc" id="L65">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L66">    sb.append(this.header.concat(&quot;\n&quot;));</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">    for (String s : this.impPoints) {</span>
+<span class="fc" id="L68">      sb.append(&quot;- &quot;.concat(s.concat(&quot;\n&quot;)));</span>
+<span class="fc" id="L69">    }</span>
+<span class="fc" id="L70">    return sb.toString();</span>
+  }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ModelStudySession.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01.model</a> &gt; <span class="el_source">ModelStudySession.java</span></div><h1>ModelStudySession.java</h1><pre class="source lang-java linenums">package cs3500.pa01.model;
+
+// ... relevant imports ...
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Model for the study session
+ */
+public class ModelStudySession implements ModelSs {
+  ArrayList&lt;QuestionAndAnswer&gt; listOfAllQuestions; // list of all questions in the question bank
+  ArrayList&lt;QuestionAndAnswer&gt; sessionList; // list of questions to be asked in the study session
+
+  int numOfQues; // number of questions to be asked in the study session
+  Path pathOfQuestionBank; // path to the question bank
+
+  int countHardQues; // number of hard questions in the question bank
+
+  int countEasyQues; // number of easy questions in the question bank
+
+  Random rand;
+
+  /**
+   * Constructor for the model of the study session
+   *
+   * @param pathOfQuestionBank path to the question bank
+   * @param numOfQues          number of questions to be asked in the study session
+   * @param rand               random number generator
+   */
+<span class="fc" id="L41">  public ModelStudySession(Path pathOfQuestionBank, int numOfQues, Random rand) {</span>
+<span class="fc" id="L42">    this.pathOfQuestionBank = pathOfQuestionBank;</span>
+<span class="fc" id="L43">    this.listOfAllQuestions = getAllQues(pathOfQuestionBank);</span>
+<span class="fc" id="L44">    this.numOfQues = Math.min(numOfQues, listOfAllQuestions.size());</span>
+<span class="fc" id="L45">    this.sessionList = new ArrayList&lt;QuestionAndAnswer&gt;();</span>
+<span class="fc" id="L46">    this.countHardQues = 0;</span>
+<span class="fc" id="L47">    this.countEasyQues = 0;</span>
+<span class="fc" id="L48">    this.rand = rand;</span>
+<span class="fc" id="L49">    generateSessionList();</span>
+<span class="fc" id="L50">  }</span>
+
+  /**
+   * gets the list of questions to be asked in the study session
+   *
+   * @return list of questions to be asked in the study session
+   */
+  public ArrayList&lt;QuestionAndAnswer&gt; getSessionList() {
+<span class="fc" id="L58">    return sessionList;</span>
+  }
+
+  /**
+   * gets the list of all questions in the question bank
+   *
+   * @return list of all questions in the question bank
+   */
+  public ArrayList&lt;QuestionAndAnswer&gt; getListOfAllQuestions() {
+<span class="fc" id="L67">    return listOfAllQuestions;</span>
+  }
+
+  /**
+   * gets the number of hard questions in the question bank
+   *
+   * @return number of hard questions in the question bank
+   */
+  public int getCountHardQues() {
+<span class="fc" id="L76">    return countHardQues;</span>
+  }
+
+  /**
+   * gets the number of easy questions in the question bank
+   *
+   * @return number of easy questions in the question bank
+   */
+  public int getCountEasyQues() {
+<span class="fc" id="L85">    return countEasyQues;</span>
+  }
+
+
+  /**
+   * mutates the questions in the question bank
+   *
+   * @param listOfAllQuestions list of all questions in the question bank
+   */
+  public void setListOfAllQuestions(ArrayList&lt;QuestionAndAnswer&gt; listOfAllQuestions) {
+<span class="fc" id="L95">    this.listOfAllQuestions = listOfAllQuestions;</span>
+<span class="fc" id="L96">  }</span>
+
+  /**
+   * writes the changes made to the question bank to the file
+   */
+  public void writeToFile() {
+<span class="fc" id="L102">    File updatedQb = new File(pathOfQuestionBank.toString());</span>
+<span class="fc" id="L103">    try (FileWriter fw = new FileWriter(updatedQb, false)) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">      for (QuestionAndAnswer qa : listOfAllQuestions) {</span>
+<span class="fc" id="L105">        fw.write(qa.toString().concat(&quot;\n&quot;));</span>
+<span class="fc" id="L106">      }</span>
+<span class="nc" id="L107">    } catch (IOException e) {</span>
+<span class="nc" id="L108">      throw new RuntimeException(e);</span>
+<span class="fc" id="L109">    }</span>
+<span class="fc" id="L110">  }</span>
+
+  /**
+   * updates the changes made to the question bank
+   *
+   * @param qaList list of questions and answers that have been answered with the updated changes.
+   */
+  public void updateChanges(ArrayList&lt;QuestionAndAnswer&gt; qaList) {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">    for (QuestionAndAnswer qa : qaList) {</span>
+<span class="fc" id="L119">      QuestionAndAnswer toBeChanged = listOfAllQuestions.get(qa.getQuestionNumber());</span>
+<span class="fc" id="L120">      toBeChanged.setDifficulty(qa.getDifficulty());</span>
+<span class="fc" id="L121">      toBeChanged.setLastAccessed(qa.getLastAccessed());</span>
+<span class="fc" id="L122">    }</span>
+<span class="fc" id="L123">    writeToFile();</span>
+<span class="fc" id="L124">  }</span>
+
+  /**
+   * generates a list of all questions to be asked in the study session by mutating the sessionList.
+   */
+  public void generateSessionList() {
+<span class="fc" id="L130">    ArrayList&lt;ArrayList&lt;QuestionAndAnswer&gt;&gt; listArray = splitList();</span>
+<span class="fc" id="L131">    ArrayList&lt;QuestionAndAnswer&gt; listHard = listArray.get(0);</span>
+<span class="fc" id="L132">    ArrayList&lt;QuestionAndAnswer&gt; listEasy = listArray.get(1);</span>
+<span class="fc" id="L133">    Collections.shuffle(listHard, this.rand);</span>
+<span class="fc" id="L134">    Collections.shuffle(listEasy, this.rand);</span>
+<span class="fc" id="L135">    listHard.addAll(listEasy);</span>
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">    for (int i = 0; i &lt; numOfQues; i++) {</span>
+<span class="fc" id="L138">      sessionList.add(listHard.get(i));</span>
+    }
+<span class="fc" id="L140">  }</span>
+
+  /**
+   * splits the list of all questions into two lists, one with hard questions and the other
+   * with easy questions
+   * mutates the countHardQues and countEasyQues fields using the size of the two lists
+   *
+   * @return an arrayList of two lists, one with hard questions and the other with easy questions
+   */
+
+  private ArrayList&lt;ArrayList&lt;QuestionAndAnswer&gt;&gt; splitList() {
+<span class="fc" id="L151">    ArrayList&lt;QuestionAndAnswer&gt; listHard = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L152">    ArrayList&lt;QuestionAndAnswer&gt; listEasy = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">    for (QuestionAndAnswer qa : listOfAllQuestions) {</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">      if (qa.getDifficulty().equals(Difficulty.HARD)) {</span>
+<span class="fc" id="L155">        listHard.add(qa);</span>
+      } else {
+<span class="fc" id="L157">        listEasy.add(qa);</span>
+      }
+<span class="fc" id="L159">    }</span>
+<span class="fc" id="L160">    this.countHardQues = listHard.size();</span>
+<span class="fc" id="L161">    this.countEasyQues = listEasy.size();</span>
+<span class="fc" id="L162">    ArrayList&lt;ArrayList&lt;QuestionAndAnswer&gt;&gt; full = new ArrayList&lt;ArrayList&lt;QuestionAndAnswer&gt;&gt;();</span>
+<span class="fc" id="L163">    full.add(listHard);</span>
+<span class="fc" id="L164">    full.add(listEasy);</span>
+<span class="fc" id="L165">    return full;</span>
+  }
+
+  /**
+   * gets all the questions from the question bank
+   *
+   * @return list of all questions from the question bank
+   */
+  public ArrayList&lt;QuestionAndAnswer&gt; getAllQues(Path pathOfQuestionBank) {
+<span class="fc" id="L174">    ArrayList&lt;QuestionAndAnswer&gt; list = new ArrayList&lt;QuestionAndAnswer&gt;();</span>
+    try {
+<span class="fc" id="L176">      try (Scanner fileReader = new Scanner(pathOfQuestionBank)) {</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        while (fileReader.hasNextLine()) {</span>
+<span class="fc" id="L178">          String currQuestion = fileReader.nextLine();</span>
+<span class="fc" id="L179">          QuestionAndAnswer ques = stringToQuestion(currQuestion);</span>
+<span class="fc" id="L180">          list.add(ques);</span>
+<span class="fc" id="L181">        }</span>
+      }
+<span class="nc" id="L183">    } catch (IOException e) {</span>
+<span class="nc" id="L184">      throw new RuntimeException(e);</span>
+<span class="fc" id="L185">    }</span>
+<span class="fc" id="L186">    return list;</span>
+  }
+
+  /**
+   * converts a properly formatted string to a question
+   *
+   * @param ques string to be converted to a question
+   * @return QuestionAndAnswer converted from the string
+   */
+  public QuestionAndAnswer stringToQuestion(String ques) {
+<span class="fc" id="L196">    String[] attrArr = questionAttrToArray(ques);</span>
+<span class="fc" id="L197">    int quesNum = Integer.parseInt(attrArr[0]);</span>
+<span class="fc" id="L198">    String question = attrArr[1];</span>
+<span class="fc" id="L199">    String ans = attrArr[2];</span>
+<span class="fc" id="L200">    Difficulty diff = Difficulty.valueOf(attrArr[3]);</span>
+<span class="fc" id="L201">    Instant lastAccess = Instant.parse(attrArr[4]);</span>
+
+<span class="fc" id="L203">    return new QuestionAndAnswer(quesNum, question, ans, diff, lastAccess);</span>
+  }
+
+  /**
+   * takes a question and converts it to an array of strings
+   *
+   * @param ques question to be converted to an array of strings
+   * @return array of strings converted from the question with attributes of the question at
+   *         specific indices
+   */
+  private String[] questionAttrToArray(String ques) {
+<span class="fc" id="L214">    String[] strArr = new String[5];</span>
+<span class="fc" id="L215">    Scanner s2 = new Scanner(ques);</span>
+<span class="fc" id="L216">    Pattern p = Pattern.compile(&quot;\\[\\[(.*?)\\]\\]&quot;);</span>
+<span class="fc" id="L217">    Matcher match = p.matcher(ques);</span>
+<span class="fc" id="L218">    int index = 0;</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">    while (match.find()) {</span>
+<span class="fc" id="L220">      String attribute = match.group(1);</span>
+<span class="fc" id="L221">      strArr[index] = attribute;</span>
+<span class="fc" id="L222">      index++;</span>
+<span class="fc" id="L223">    }</span>
+<span class="fc" id="L224">    return strArr;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

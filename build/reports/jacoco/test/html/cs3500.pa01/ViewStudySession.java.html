@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ViewStudySession.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01</a> &gt; <span class="el_source">ViewStudySession.java</span></div><h1>ViewStudySession.java</h1><pre class="source lang-java linenums">package cs3500.pa01;
+
+import java.io.IOException;
+import java.util.Objects;
+
+/**
+ * View for the study session
+ */
+public class ViewStudySession {
+
+  private StringBuilder appendable;
+
+<span class="fc" id="L13">  public ViewStudySession(StringBuilder appendable) {</span>
+<span class="fc" id="L14">    this.appendable = Objects.requireNonNull(appendable);</span>
+<span class="fc" id="L15">  }</span>
+
+  public StringBuilder getAppendable() {
+<span class="nc" id="L18">    return appendable;</span>
+  }
+
+  public void showWelcomeScreen() {
+<span class="fc" id="L22">    appendable.setLength(0);</span>
+<span class="fc" id="L23">    appendable.append(</span>
+        &quot;Welcome to your Study Session! &quot; + &quot;\n&quot; + &quot;Please input the path your QuestionBank File&quot;);
+<span class="fc" id="L25">    System.out.println(appendable.toString());</span>
+
+<span class="fc" id="L27">  }</span>
+
+  /**
+   * asks the user for the number of questions they want to be asked
+   */
+  public void askNumOfQues() {
+<span class="nc" id="L33">    appendable.setLength(0);</span>
+<span class="nc" id="L34">    appendable.append(&quot;Please Enter the Number of Questions&quot;);</span>
+<span class="nc" id="L35">    System.out.println(appendable.toString());</span>
+<span class="nc" id="L36">  }</span>
+
+  /**
+   * shows the question to the user and the instructions and the last accessed date
+   *
+   * @param qa question and answer
+   */
+  public void showQuestion(QuestionAndAnswer qa) {
+<span class="nc" id="L44">    appendable.setLength(0);</span>
+<span class="nc" id="L45">    appendable.append(qa.getQuestion()).append(&quot;\n&quot;)</span>
+<span class="nc" id="L46">        .append(&quot;1. Mark Hard, 2. Mark Easy, 3. Show Answer 4. Exit\n&quot;).append(&quot;Last Accessed On: &quot;)</span>
+<span class="nc" id="L47">        .append(qa.getLastAccessed().toString().substring(0, 10)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L48">    System.out.println(appendable.toString());</span>
+<span class="nc" id="L49">  }</span>
+
+  /**
+   * shows the summary of the study session
+   *
+   * @param quesAnswered  number of questions answered
+   * @param easyToHard    number of questions changed from easy to hard
+   * @param hardToEasy    number of questions changed from hard to easy
+   * @param totalHardQues number of hard questions in the question bank
+   * @param totalEasyQues number of easy questions in the question bank
+   */
+  public void getSummary(int quesAnswered, int easyToHard, int hardToEasy, int totalHardQues,
+                         int totalEasyQues) {
+<span class="nc" id="L62">    appendable.setLength(0);</span>
+<span class="nc" id="L63">    appendable.append(&quot;TOTAL QUESTIONS ANSWERED: &quot;).append(String.valueOf(quesAnswered))</span>
+<span class="nc" id="L64">        .append(&quot;\n&quot;).append(&quot;TOTAL QUESTIONS CHANGED FROM EASY TO HARD: &quot;)</span>
+<span class="nc" id="L65">        .append(String.valueOf(easyToHard)).append(&quot;\n&quot;)</span>
+<span class="nc" id="L66">        .append(&quot;TOTAL QUESTIONS CHANGED FROM HARD TO EASY: &quot;).append(String.valueOf(hardToEasy))</span>
+<span class="nc" id="L67">        .append(&quot;\n&quot;).append(&quot;TOTAL HARD QUESTIONS: &quot;).append(String.valueOf(totalHardQues))</span>
+<span class="nc" id="L68">        .append(&quot;\n&quot;).append(&quot;TOTAL EASY QUESTIONS: &quot;).append(String.valueOf(totalEasyQues))</span>
+<span class="nc" id="L69">        .append(&quot;\n&quot;);</span>
+<span class="nc" id="L70">    System.out.println(appendable.toString());</span>
+<span class="nc" id="L71">  }</span>
+
+  /**
+   * shows invalid input
+   */
+  public void showInvalidInput() {
+<span class="nc" id="L77">    appendable.setLength(0);</span>
+<span class="nc" id="L78">    appendable.append(&quot;Invalid Input. Please Try Again&quot;);</span>
+<span class="nc" id="L79">    System.out.println(appendable.toString());</span>
+<span class="nc" id="L80">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

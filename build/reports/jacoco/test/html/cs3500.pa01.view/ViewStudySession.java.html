@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ViewStudySession.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PA02</a> &gt; <a href="index.source.html" class="el_package">cs3500.pa01.view</a> &gt; <span class="el_source">ViewStudySession.java</span></div><h1>ViewStudySession.java</h1><pre class="source lang-java linenums">package cs3500.pa01.view;
+
+import cs3500.pa01.model.QuestionAndAnswer;
+import java.io.IOException;
+import java.util.Objects;
+
+/**
+ * View for the study session
+ */
+public class ViewStudySession {
+
+  private Appendable appendable;
+
+<span class="fc" id="L14">  public ViewStudySession(Appendable appendable) {</span>
+<span class="fc" id="L15">    this.appendable = Objects.requireNonNull(appendable);</span>
+<span class="fc" id="L16">  }</span>
+
+  public Appendable getAppendable() {
+<span class="fc" id="L19">    return appendable;</span>
+  }
+
+  public void showWelcomeScreen() throws IOException {
+<span class="fc" id="L23">    appendable.append(</span>
+        &quot;\n\nWelcome to your Study Session! \n&quot;);
+<span class="fc" id="L25">  }</span>
+
+  /**
+   * asks the user for the number of questions they want to be asked
+   */
+  public void askPath() throws IOException {
+<span class="fc" id="L31">    appendable.append(</span>
+        &quot;Please input the path your QuestionBank File\n&quot;);
+<span class="fc" id="L33">  }</span>
+
+  /**
+   * asks the user for the number of questions they want to be asked
+   */
+  public void askNumOfQues() throws IOException {
+<span class="fc" id="L39">    appendable.append(&quot;Please Enter the Number of Questions\n&quot;);</span>
+<span class="fc" id="L40">  }</span>
+
+  /**
+   * shows the question to the user and the instructions and the last accessed date
+   *
+   * @param qa question and answer
+   */
+  public void showQuestion(QuestionAndAnswer qa) throws IOException {
+<span class="fc" id="L48">    appendable.append(qa.getQuestion()).append(&quot;\n&quot;)</span>
+<span class="fc" id="L49">        .append(&quot;1. Mark Hard, 2. Mark Easy, 3. Show Answer 4. Exit\n&quot;).append(&quot;Last Accessed On: &quot;)</span>
+<span class="fc" id="L50">        .append(qa.getLastAccessed().toString().substring(0, 10)).append(&quot;\n&quot;);</span>
+<span class="fc" id="L51">  }</span>
+
+  /**
+   * shows the summary of the study session
+   *
+   * @param quesAnswered  number of questions answered
+   * @param easyToHard    number of questions changed from easy to hard
+   * @param hardToEasy    number of questions changed from hard to easy
+   * @param totalHardQues number of hard questions in the question bank
+   * @param totalEasyQues number of easy questions in the question bank
+   */
+  public void getSummary(int quesAnswered, int easyToHard, int hardToEasy, int totalHardQues,
+                         int totalEasyQues) throws IOException {
+<span class="fc" id="L64">    appendable.append(&quot;TOTAL QUESTIONS ANSWERED: &quot;).append(String.valueOf(quesAnswered))</span>
+<span class="fc" id="L65">        .append(&quot;\n&quot;).append(&quot;TOTAL QUESTIONS CHANGED FROM EASY TO HARD: &quot;)</span>
+<span class="fc" id="L66">        .append(String.valueOf(easyToHard)).append(&quot;\n&quot;)</span>
+<span class="fc" id="L67">        .append(&quot;TOTAL QUESTIONS CHANGED FROM HARD TO EASY: &quot;).append(String.valueOf(hardToEasy))</span>
+<span class="fc" id="L68">        .append(&quot;\n&quot;).append(&quot;TOTAL HARD QUESTIONS: &quot;).append(String.valueOf(totalHardQues))</span>
+<span class="fc" id="L69">        .append(&quot;\n&quot;).append(&quot;TOTAL EASY QUESTIONS: &quot;).append(String.valueOf(totalEasyQues))</span>
+<span class="fc" id="L70">        .append(&quot;\n&quot;);</span>
+<span class="fc" id="L71">  }</span>
+
+  /**
+   * shows invalid input
+   */
+  public void showInvalidInput() throws IOException {
+<span class="fc" id="L77">    appendable.append(&quot;Invalid Input. Please Try Again\n&quot;);</span>
+<span class="fc" id="L78">  }</span>
+
+  public void showAns(QuestionAndAnswer currQa) throws IOException {
+<span class="fc" id="L81">    appendable.append(currQa.getAnswer()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L82">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

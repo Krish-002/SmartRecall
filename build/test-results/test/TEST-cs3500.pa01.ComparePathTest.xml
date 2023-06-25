@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs3500.pa01.ComparePathTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-27T00:29:23" hostname="Krishs-MacBook-8.local" time="0.058">
+  <properties/>
+  <testcase name="testCompare()" classname="cs3500.pa01.ComparePathTest" time="0.058"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
