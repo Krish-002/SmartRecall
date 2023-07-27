@@ -25,7 +25,7 @@ We take software quality seriously. SmartRecall has undergone rigorous testing u
 2. Locate the `Driver.java` file within the `SmartRecall/src/main/java/cs3500/pa01` directory.
 3. To create a study guide and question bank, execute the following command:
 
-java Driver <path-to-folder> <ordering-flag> <path-to-output-studyguide>
+java Driver [path-to-folder] [ordering-flag] [path-to-output-studyguide]
 
 
 - `<path-to-folder>`: The path to the folder containing the .md files with important points.
